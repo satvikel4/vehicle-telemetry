@@ -1,0 +1,5 @@
+{
+  "name": "vehicle-telemetry",
+  "private": true,
+  "workspaces": ["app/*"]
+}
