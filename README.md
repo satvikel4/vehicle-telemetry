@@ -18,3 +18,14 @@ This project is a **full-stack platform** that simulates, ingests, and visualize
 
 ## 🔹 Motivation  
 This project grew out of my passion for building **real-time, full-stack systems** that combine software engineering, distributed data pipelines, and simulation. I wanted to explore how telemetry from vehicles or robots could be captured, processed, and visualized in a way that feels both scalable and practical. It’s a playground for experimenting with real-world engineering problems: streaming data, anomaly detection, and control loops — all without needing physical hardware.  
+
+---
+
+## 🚀 Usage  
+
+You can run the full stack locally with **Docker Compose** or spin up individual services for development.  
+
+### 1. Start the stack (recommended)  
+From the `app/deploy` directory:  
+```bash
+docker compose up -d --build
