@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+
+  db:
+    image: mongo:7
+    ports: ["27017:27017"]
+    # durable local volume (optional but recommended)
+    volumes:
+      - mongo_data:/data/db
+
+  gateway:
+    build: ../gateway
+    environment:
+      - PORT=8080
+      - MONGO_URI=mongodb://db:27017
+      - REDIS_URI=redis://redis:6379
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "8080:8080"
+
+  # one simulator (you can scale this, see below)
+  simulator:
+    build:
+      context: ../simulator
+    environment:
+      - WS_URL=ws://gateway:8080/ws/telemetry
+      - VEHICLE_ID=veh_007
+    depends_on:
+      - gateway
+
+  frontend:
+    build:
+      context: ../frontend
+    environment:
+      - VITE_WS_STREAM=ws://localhost:8080/ws/stream
+    depends_on:
+      - gateway
+    ports:
+      - "5173:5173"
+
+volumes:
+  mongo_data:
